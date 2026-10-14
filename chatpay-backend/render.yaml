@@ -3,12 +3,11 @@ services:
   - type: web
     name: chatpay-backend
     runtime: node
-    plan: starter # Starter is recommended for persistent WebSockets; free tier sleeps after 15m
+    plan: free
     region: oregon
     rootDir: chatpay-backend
     buildCommand: npm install --include=dev && npm run build
-    preDeployCommand: npx prisma migrate deploy
-    startCommand: npm start
+    startCommand: npx prisma migrate deploy && npm start
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
@@ -45,5 +44,5 @@ databases:
   - name: chatpay-postgres
     databaseName: chatpay_db
     user: chatpay_user
-    plan: starter # or free
+    plan: free
     region: oregon
