@@ -1,0 +1,18 @@
+# Environment & Secrets (NEVER COMMIT OR TOUCH REAL ENV FILES)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Session Handoff & Context
+RESUME.md
+
+# Dependencies
+node_modules/
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
