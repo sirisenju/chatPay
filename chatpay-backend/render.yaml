@@ -6,7 +6,7 @@ services:
     plan: starter # Starter is recommended for persistent WebSockets; free tier sleeps after 15m
     region: oregon
     rootDir: chatpay-backend
-    buildCommand: npm install && npm run build
+    buildCommand: npm install --include=dev && npm run build
     preDeployCommand: npx prisma migrate deploy
     startCommand: npm start
     healthCheckPath: /health
