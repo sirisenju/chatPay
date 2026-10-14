@@ -12,6 +12,11 @@ Welcome to the **Chatpay Backend** repository. All AI assistants, agents, subage
 - **Never attempt to search or grep inside `.env` files**.
 - **Allowed Exception**: Agents may create, inspect, and update `.env.example` solely as an example/template schema file using dummy/placeholder values. Never put real credentials or secrets in `.env.example`.
 
+### 🚨 Git Version Control: User-Only Manual Add, Commit, and Push
+- **NEVER run `git add`, `git commit`, `git push`, or any command that stages, commits, or pushes changes**.
+- **The USER must be the one to manually add, commit, and push changes** to ensure they review all work before it is committed or published.
+- Agents may run read-only git inspection commands (`git status`, `git diff`, `git log`) to verify working directory status, but MUST NEVER stage, commit, or push under any circumstances.
+
 ### 🚨 Workspace Boundaries
 - **Strictly restricted to `chatpay-backend/`**:
   - Do NOT create, read, modify, or execute files outside the `chatpay-backend` folder.
@@ -40,3 +45,4 @@ Welcome to the **Chatpay Backend** repository. All AI assistants, agents, subage
 - **Git Hygiene**:
   - Respect `.gitignore` rules at all times.
   - Never commit build artifacts, node modules, logs, or secret keys.
+  - Leave staging and committing entirely to the user.

@@ -9,7 +9,7 @@ This document is the complete implementation guide for the **Frontend Developer 
 | Environment | Base HTTP URL | WebSockets (Socket.IO) | Interactive Docs |
 | :--- | :--- | :--- | :--- |
 | **Local Development** | `http://localhost:4000` | `ws://localhost:4000` | `http://localhost:4000/docs` |
-| **Production / Render** | `https://chatpay-backend.onrender.com` | `wss://chatpay-backend.onrender.com` | `https://chatpay-backend.onrender.com/docs` |
+| **Production / Render** | `https://chatpay-7anj.onrender.com` | `wss://chatpay-7anj.onrender.com` | `https://chatpay-7anj.onrender.com/docs` |
 
 - **OpenAPI 3.1 Contract File**: [`openapi.json`](./openapi.json) (can be imported into Orval, OpenAPI Generator, or Swagger Editor).
 - **Socket.IO Event Catalog**: [`docs/realtime-events.md`](./docs/realtime-events.md).
@@ -23,7 +23,7 @@ Render free instances spin down after 15 minutes of inactivity. To ensure the ba
 ### Setup Free Uptime Ping:
 1. Create a free account at **[UptimeRobot](https://uptimerobot.com/)** or **[cron-job.org](https://cron-job.org/)**.
 2. Add a new HTTP monitor:
-   - **URL**: `https://chatpay-backend.onrender.com/health` (or your Render URL)
+   - **URL**: `https://chatpay-7anj.onrender.com/health`
    - **Interval**: **10 minutes**
    - **Method**: `GET`
 3. **Result**: UptimeRobot pings `/health` every 10 minutes around the clock. Render's inactivity timer never expires, keeping the free container permanently warm and responsive.
