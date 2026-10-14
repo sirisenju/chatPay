@@ -1,0 +1,49 @@
+services:
+  # ChatPay Backend Web Service (Node.js + Fastify + Socket.IO)
+  - type: web
+    name: chatpay-backend
+    runtime: node
+    plan: starter # Starter is recommended for persistent WebSockets; free tier sleeps after 15m
+    region: oregon
+    rootDir: chatpay-backend
+    buildCommand: npm install && npm run build
+    preDeployCommand: npx prisma migrate deploy
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chatpay-postgres
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CORS_ORIGIN
+        value: "*" # Update to your deployed frontend domain once ready
+      - key: STELLAR_HORIZON_URL
+        value: https://horizon-testnet.stellar.org
+      - key: STELLAR_NETWORK_PASSPHRASE
+        value: "Test SDF Network ; September 2015"
+      - key: USDC_ASSET_CODE
+        value: USDC
+      - key: USDC_ISSUER
+        value: GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5
+      - key: MAX_PAYMENT_CAP
+        value: "1000"
+      - key: TRANSACTION_TIMEOUT_SECONDS
+        value: "300"
+      - key: ENABLE_LLM_PARSER
+        value: "false"
+
+databases:
+  # Managed PostgreSQL Database
+  - name: chatpay-postgres
+    databaseName: chatpay_db
+    user: chatpay_user
+    plan: starter # or free
+    region: oregon

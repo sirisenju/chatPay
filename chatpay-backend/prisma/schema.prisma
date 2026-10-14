@@ -1,0 +1,112 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum PaymentStatus {
+  previewed
+  awaiting_signature
+  submitted
+  confirmed
+  failed
+  expired
+  cancelled
+}
+
+enum MessageRole {
+  user
+  system
+}
+
+model User {
+  id           String        @id @default(uuid())
+  publicKey    String        @unique @map("public_key")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+
+  recipients   Recipient[]
+  payments     Payment[]
+  chatMessages ChatMessage[]
+
+  @@map("users")
+}
+
+model AuthChallenge {
+  id        String    @id @default(uuid())
+  publicKey String    @map("public_key")
+  nonce     String    @unique
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@index([publicKey])
+  @@map("auth_challenges")
+}
+
+model Recipient {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  alias     String
+  aliasNorm String   @map("alias_norm")
+  address   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments  Payment[]
+
+  @@unique([userId, aliasNorm])
+  @@index([userId])
+  @@map("recipients")
+}
+
+model Payment {
+  id               String        @id @default(uuid())
+  userId           String        @map("user_id")
+  recipientId      String?       @map("recipient_id")
+  recipientAddress String        @map("recipient_address")
+  amount           String
+  assetCode        String        @map("asset_code")
+  assetIssuer      String        @map("asset_issuer")
+  memo             String?
+  status           PaymentStatus @default(previewed)
+  xdrUnsigned      String        @map("xdr_unsigned") @db.Text
+  txHashExpected   String?       @map("tx_hash_expected")
+  txHash           String?       @map("tx_hash")
+  sourceSeq        String?       @map("source_seq")
+  expiresAt        DateTime      @map("expires_at")
+  failureCode      String?       @map("failure_code")
+  clientMsgId      String?       @map("client_msg_id")
+  createdAt        DateTime      @default(now()) @map("created_at")
+  confirmedAt      DateTime?     @map("confirmed_at")
+
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipient        Recipient?    @relation(fields: [recipientId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, clientMsgId])
+  @@index([userId])
+  @@index([txHash])
+  @@index([status])
+  @@map("payments")
+}
+
+model ChatMessage {
+  id          String      @id @default(uuid())
+  userId      String      @map("user_id")
+  seq         Int         @default(autoincrement())
+  role        MessageRole @default(system)
+  type        String      // 'text', 'preview', 'clarify', 'needs_recipient', 'status', 'error'
+  payload     Json
+  clientMsgId String?     @map("client_msg_id")
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, clientMsgId])
+  @@index([userId, seq])
+  @@map("chat_messages")
+}
