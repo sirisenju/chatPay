@@ -16,7 +16,8 @@
     "prisma:deploy": "prisma migrate deploy",
     "export:openapi": "tsx scripts/export-openapi.ts",
     "setup:testnet": "tsx scripts/setup-testnet.ts",
-    "testnet:setup": "tsx scripts/setup-testnet.ts"
+    "testnet:setup": "tsx scripts/setup-testnet.ts",
+    "test:e2e": "tsx scripts/test-e2e.ts"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
