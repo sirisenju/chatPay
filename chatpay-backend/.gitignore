@@ -4,6 +4,8 @@
 !.env.example
 *.pem
 *.key
+demo-accounts.json
+testnet-accounts.json
 
 # Session Handoff & Context
 RESUME.md

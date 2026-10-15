@@ -125,32 +125,29 @@ async function runSetup() {
     console.warn('Note on trustline/minting:', (err as Error).message);
   }
 
-  // 6. Write secrets to gitignored .env.demo file (NEVER committed to git)
-  const envDemoContent = `# ChatPay Demo & Testnet Accounts (Gitignored)
-# Generated at ${new Date().toISOString()}
+  // 6. Write secrets to gitignored demo-accounts.json file (NEVER committed to git)
+  const demoAccounts = {
+    generatedAt: new Date().toISOString(),
+    sender: {
+      publicKey: sender.publicKey(),
+      secretKey: sender.secret()
+    },
+    recipient: {
+      publicKey: recipient.publicKey(),
+      secretKey: recipient.secret()
+    },
+    testIssuer: {
+      publicKey: testIssuer.publicKey(),
+      secretKey: testIssuer.secret()
+    },
+    circleFaucetUrl: `https://faucet.circle.com/ (Select Stellar Testnet, Address: ${sender.publicKey()})`
+  };
 
-# Sender Account
-DEMO_SENDER_PUBLIC_KEY=${sender.publicKey()}
-DEMO_SENDER_SECRET_KEY=${sender.secret()}
+  const outputPath = path.resolve(process.cwd(), 'demo-accounts.json');
+  fs.writeFileSync(outputPath, JSON.stringify(demoAccounts, null, 2), 'utf8');
 
-# Recipient Account
-DEMO_RECIPIENT_PUBLIC_KEY=${recipient.publicKey()}
-DEMO_RECIPIENT_SECRET_KEY=${recipient.secret()}
-
-# Test Issuer Account
-TEST_ISSUER_PUBLIC_KEY=${testIssuer.publicKey()}
-TEST_ISSUER_SECRET_KEY=${testIssuer.secret()}
-
-# Circle Testnet USDC Faucet:
-# Request 10 Circle Testnet USDC for ${sender.publicKey()} at:
-# https://faucet.circle.com/
-`;
-
-  const outputPath = path.resolve(process.cwd(), '.env.demo');
-  fs.writeFileSync(outputPath, envDemoContent, 'utf8');
-
-  console.log(`\n💾 Test credentials successfully written to: ${outputPath}`);
-  console.log('👉 To acquire Circle Testnet USDC for demo accounts, visit: https://faucet.circle.com/');
+  console.log(`\n💾 Test credentials successfully saved to: ${outputPath}`);
+  console.log('👉 To acquire official Circle Testnet USDC for demo accounts, visit: https://faucet.circle.com/');
   console.log(`   Use Sender Address: ${sender.publicKey()}`);
   console.log('✨ Stellar Testnet setup completed successfully!\n');
 }

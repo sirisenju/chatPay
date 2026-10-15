@@ -1135,6 +1135,14 @@
   },
   "servers": [
     {
+      "url": "/",
+      "description": "Current Environment (Default)"
+    },
+    {
+      "url": "https://chatpay-7anj.onrender.com",
+      "description": "Production Render Server"
+    },
+    {
       "url": "http://localhost:4000",
       "description": "Local development server"
     }

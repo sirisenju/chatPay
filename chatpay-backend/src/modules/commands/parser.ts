@@ -1,4 +1,5 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
+import { zodResponseFormat } from 'openai/helpers/zod';
 import { z } from 'zod';
 import { config } from '../../config/index.js';
 
@@ -12,9 +13,9 @@ export interface ParsedCommand {
 
 const llmExtractionSchema = z.object({
   intent: z.enum(['payment', 'unknown']),
-  amount: z.string().nullable().optional(),
-  asset: z.string().nullable().optional(),
-  recipient: z.string().nullable().optional()
+  amount: z.string().nullable(),
+  asset: z.string().nullable(),
+  recipient: z.string().nullable()
 });
 
 /**
@@ -118,35 +119,41 @@ export function parseWithRules(input: string): ParsedCommand {
 }
 
 /**
- * Optional Tier 2: LLM Field Extraction with Claude Haiku (behind feature flag)
+ * Optional Tier 2: LLM Field Extraction with OpenAI gpt-4o-mini (behind feature flag)
  */
 export async function parseWithLLM(input: string): Promise<ParsedCommand> {
-  if (!config.ENABLE_LLM_PARSER || !config.ANTHROPIC_API_KEY) {
+  if (!config.ENABLE_LLM_PARSER || !config.OPENAI_API_KEY) {
     return parseWithRules(input);
   }
 
   try {
-    const anthropic = new Anthropic({ apiKey: config.ANTHROPIC_API_KEY });
-    const response = await anthropic.messages.create({
-      model: 'claude-3-5-haiku-20241022',
-      max_tokens: 150,
+    const openai = new OpenAI({ apiKey: config.OPENAI_API_KEY });
+    const completion = await openai.chat.completions.parse({
+      model: 'gpt-4o-mini',
       temperature: 0,
-      system:
-        'You are an intent extraction engine for a payments chat application. ' +
-        'Extract fields into a JSON object: {"intent": "payment" | "unknown", "amount": string | null, "asset": string | null, "recipient": string | null}. ' +
-        'Output ONLY raw valid JSON, no explanations.',
-      messages: [{ role: 'user', content: input }]
+      messages: [
+        {
+          role: 'system',
+          content:
+            'You are an intent extraction engine for a Stellar Testnet payments chat application. ' +
+            'Extract fields into: intent ("payment" or "unknown"), amount (number as string or null), ' +
+            'asset (e.g. "USDC" or "XLM", defaults to "USDC"), and recipient (alias or null).'
+        },
+        { role: 'user', content: input }
+      ],
+      response_format: zodResponseFormat(llmExtractionSchema, 'payment_extraction')
     });
 
-    const content = response.content[0]?.type === 'text' ? response.content[0].text : '';
-    const parsedJson = JSON.parse(content);
-    const validated = llmExtractionSchema.parse(parsedJson);
+    const parsed = completion.choices[0]?.message?.parsed;
+    if (!parsed) {
+      return parseWithRules(input);
+    }
 
     return {
-      intent: validated.intent,
-      amount: validated.amount || undefined,
-      asset: validated.asset ? validated.asset.toUpperCase() : 'USDC',
-      recipientAlias: validated.recipient || undefined,
+      intent: parsed.intent,
+      amount: parsed.amount || undefined,
+      asset: parsed.asset ? parsed.asset.toUpperCase() : 'USDC',
+      recipientAlias: parsed.recipient || undefined,
       rawText: input
     };
   } catch {

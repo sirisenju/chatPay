@@ -42,7 +42,9 @@ export async function buildApp(): Promise<FastifyInstance> {
   // Plugins
   await app.register(cors, {
     origin: config.CORS_ORIGIN === '*' ? true : config.CORS_ORIGIN,
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    credentials: true
   });
 
   await app.register(fastifyJwt, {
@@ -61,6 +63,14 @@ export async function buildApp(): Promise<FastifyInstance> {
         version: '0.2.0'
       },
       servers: [
+        {
+          url: '/',
+          description: 'Current Environment (Default)'
+        },
+        {
+          url: 'https://chatpay-7anj.onrender.com',
+          description: 'Production Render Server'
+        },
         {
           url: `http://localhost:${config.PORT}`,
           description: 'Local development server'

@@ -35,7 +35,7 @@ const envSchema = z.object({
   TRANSACTION_TIMEOUT_SECONDS: z.coerce.number().default(300),
 
   ENABLE_LLM_PARSER: z.preprocess((val) => val === 'true' || val === true, z.boolean()).default(false),
-  ANTHROPIC_API_KEY: z.string().optional()
+  OPENAI_API_KEY: z.string().optional()
 });
 
 const parseConfig = () => {
