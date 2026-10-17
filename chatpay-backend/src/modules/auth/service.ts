@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { verifyMessageSignature } from './message-signature.js';
 import { Keypair, StrKey } from '@stellar/stellar-sdk';
 import { prisma } from '../../db/prisma.js';
 import { AppError } from '../../types/errors.js';
@@ -97,26 +98,9 @@ export class AuthService {
       challengeRecord.expiresAt
     );
 
-    const messageBuffer = Buffer.from(challengeText, 'utf8');
     const keypair = Keypair.fromPublicKey(publicKey);
+    const isValid = verifyMessageSignature(challengeText, signature, (payload, bytes) => keypair.verify(payload, bytes));
 
-    // Verify signature - try base64, then hex
-    let isValid = false;
-    try {
-      const sigBuffer = Buffer.from(signature, 'base64');
-      isValid = keypair.verify(messageBuffer, sigBuffer);
-    } catch {
-      // ignore and try hex
-    }
-
-    if (!isValid) {
-      try {
-        const sigBuffer = Buffer.from(signature, 'hex');
-        isValid = keypair.verify(messageBuffer, sigBuffer);
-      } catch {
-        // failed
-      }
-    }
 
     if (!isValid) {
       throw new AppError('UNAUTHORIZED', 'Invalid cryptographic signature for authentication challenge', 401);

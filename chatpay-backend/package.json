@@ -9,6 +9,7 @@
     "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "test": "vitest run",
+    "test:auth-message": "node --test tests/unit/message-signature.test.mjs",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "prisma:generate": "prisma generate",
