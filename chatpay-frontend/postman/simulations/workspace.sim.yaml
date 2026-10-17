@@ -1,0 +1,5 @@
+simulation: chatpay-workspace
+routing: path
+mocks:
+  - routeKey: backend
+    path: ../mocks/chatpay/default.cjs

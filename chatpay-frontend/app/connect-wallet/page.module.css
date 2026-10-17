@@ -1,0 +1,600 @@
+.page {
+  min-height: 100svh;
+  overflow: clip;
+  color: #15352c;
+  background: #fff;
+}
+.page button:focus-visible,
+.page a:focus-visible {
+  outline-color: #00865e;
+}
+.header {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+}
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 30px;
+  background: #dff8ee;
+  color: #269573;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+.help {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 1px solid #dce6e0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.help:hover {
+  background: #f0faf5;
+}
+.main {
+  background: radial-gradient(
+    ellipse 110% 125% at 90% 100%,
+    #53dfb3 0%,
+    #9aefd6 42%,
+    #e1faf2 75%,
+    #fff 100%
+  );
+}
+.inner {
+  position: relative;
+  max-width: 1440px;
+  min-height: max(800px, calc(100svh - 76px));
+  margin: auto;
+  padding: 110px 6.7% 130px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.artwork {
+  position: absolute;
+  left: -17%;
+  top: 50%;
+  width: 48%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.artwork img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.connectedArtwork {
+  width: 44%;
+  left: -11%;
+}
+.content {
+  position: relative;
+  width: 68%;
+}
+.intro {
+  display: grid;
+  grid-template-columns: 29% 1fr;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+.heading {
+  font-family: var(--font-bricolage), Arial, sans-serif;
+  font-size: clamp(35px, 3.65vw, 54px);
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -1.3px;
+  margin: 0 0 22px;
+}
+.heading:focus {
+  outline: none;
+}
+.description {
+  margin: 0;
+  color: #7a8d84;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.connectionGraphic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #8da69a;
+}
+.appMark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.walletMark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  background: #fff;
+  border: 1px solid #dce6e0;
+  border-radius: 22px;
+  color: #557167;
+}
+.walletMark svg {
+  width: 30px;
+  height: 30px;
+}
+.eyebrow {
+  margin: 0 0 12px;
+  color: #7a8d84;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+}
+.walletCard {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #dce6e0;
+  border-radius: 20px;
+}
+.walletCard strong {
+  font-size: 18px;
+}
+.walletCard p {
+  margin: 5px 0 0;
+  color: #7a8d84;
+  font-size: 13px;
+}
+.freighterIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  color: #00cf98;
+  background: #13352b;
+}
+.selected {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-left: auto;
+  border: 1px solid #269573;
+  border-radius: 50%;
+  color: #269573;
+}
+.selected svg {
+  width: 12px;
+  height: 12px;
+}
+.installCard {
+  padding: 18px;
+  margin-top: 12px;
+  border-radius: 18px;
+  background: #edf3eb;
+  font-size: 13px;
+}
+.installCard p {
+  margin: 9px 0;
+  color: #7a8d84;
+  line-height: 1.5;
+}
+.installCard a {
+  color: #188763;
+  font-weight: 600;
+}
+.installCard a:hover {
+  text-decoration: underline;
+}
+.privacy {
+  margin: 62px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #7a8d84;
+  font-size: 13px;
+}
+.privacy svg {
+  width: 16px;
+  height: 16px;
+}
+.primary {
+  width: 100%;
+  min-height: 56px;
+}
+.primary:disabled {
+  cursor: wait;
+  opacity: 0.65;
+  transform: none;
+}
+.footnote {
+  margin: 16px 0 0;
+  color: #7a8d84;
+  text-align: center;
+  font-size: 11px;
+}
+.connectedIntro {
+  grid-template-columns: 34% 1fr;
+  gap: 45px;
+  margin-bottom: 26px;
+}
+.successOrbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid #dce9e1;
+  border-radius: 50%;
+}
+.successOrbit > div {
+  width: 72%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #dff8ee;
+  display: grid;
+  place-items: center;
+}
+.successOrbit span {
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #00cf98;
+  display: grid;
+  place-items: center;
+}
+.successOrbit svg {
+  width: 44%;
+  height: 44%;
+  stroke-width: 1;
+}
+.successOrbit i {
+  position: absolute;
+  top: 11%;
+  right: 11%;
+  width: 20px;
+  height: 20px;
+  background: #00cf98;
+  border-radius: 50%;
+}
+.connectedCard {
+  padding: 36px;
+  border: 1px solid #dce6e0;
+  border-radius: 25px;
+  background: #fff;
+}
+.cardRow,
+.addressRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.cardRow strong {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+}
+.cardRow strong svg {
+  width: 22px;
+  height: 22px;
+}
+.addressRow {
+  margin-top: 34px;
+}
+.addressRow code {
+  color: #7a8d84;
+  font-family: inherit;
+  font-size: 16px;
+}
+.copy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #15352c;
+  font-size: 14px;
+  font-weight: 600;
+}
+.copy > span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #dce6e0;
+  border-radius: 12px;
+}
+.copy:hover {
+  color: #00865e;
+}
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 24px;
+}
+.cardCaption {
+  margin: 0;
+  color: #7a8d84;
+  font-size: 12px;
+}
+.disconnect {
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: #386c5a;
+  font-family: var(--font-poppins), Arial, sans-serif;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.disconnect:hover { color: #006e4e; }
+.disconnect:disabled { opacity: .5; cursor: wait; }
+.resetRow { display: flex; justify-content: flex-end; }
+.notice { padding: 14px 18px; border: 1px solid #9bd3be; border-radius: 12px; background: #f0fff8; color: #225b46; font-size: 14px; line-height: 1.6; }
+.assurance {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 22px 25px;
+  background: #f7faf5;
+  border-radius: 18px;
+  margin: 24px 0;
+}
+.assurance svg {
+  flex-shrink: 0;
+  color: #269573;
+}
+.assurance p {
+  margin: 0;
+  color: #7a8d84;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.error {
+  padding: 14px 18px;
+  border: 1px solid #e1b7a6;
+  background: #fff5ee;
+  border-radius: 12px;
+  color: #873b23;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 1100px) {
+  .main {
+    background: radial-gradient(
+      ellipse 115% 95% at 100% 100%,
+      #53dfb3 0%,
+      #9aefd6 44%,
+      #e1faf2 73%,
+      #fff 100%
+    );
+  }
+  .inner {
+    min-height: calc(100svh - 76px);
+    padding: 24px 8% 56px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 35px;
+  }
+  .artwork,
+  .connectedArtwork {
+    position: relative;
+    inset: auto;
+    width: 88%;
+    max-width: 640px;
+    margin: 0 auto;
+    transform: none;
+  }
+  .artwork img {
+    width: 100%;
+    height: min(43svh, 530px);
+    object-fit: contain;
+  }
+  .content {
+    width: 100%;
+  }
+  .intro {
+    grid-template-columns: 28% 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+  .connectionGraphic {
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  .appMark svg {
+    width: 48px;
+    height: 48px;
+  }
+  .walletMark {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+  .heading {
+    font-size: clamp(34px, 4.4vw, 46px);
+  }
+  .description {
+    font-size: 16px;
+  }
+  .connectedIntro {
+    grid-template-columns: 22% 1fr;
+    gap: 30px;
+  }
+  .successOrbit {
+    max-width: 170px;
+  }
+  .privacy {
+    margin-top: 42px;
+  }
+}
+@media (max-width: 700px) {
+  .headerActions {
+    gap: 8px;
+  }
+  .help {
+    padding-inline: 10px;
+    font-size: 11px;
+    min-height: 36px;
+    border-radius: 8px;
+  }
+  .badge {
+    font-size: 10px;
+  }
+  .inner {
+    min-height: calc(100svh - 64px);
+    padding: 14px 6% 36px;
+    gap: 24px;
+  }
+  .artwork,
+  .connectedArtwork {
+    display: block;
+    width: 100%;
+  }
+  .artwork img {
+    height: min(34svh, 330px);
+  }
+  .intro {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .heading {
+    font-size: clamp(28px, 7.5vw, 38px);
+    margin-bottom: 12px;
+    letter-spacing: -0.7px;
+  }
+  .description {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .connectionGraphic {
+    gap: 10px;
+  }
+  .appMark svg {
+    width: 40px;
+    height: 40px;
+  }
+  .walletMark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  .walletMark svg {
+    width: 23px;
+    height: 23px;
+  }
+  .privacy {
+    margin-top: 28px;
+    font-size: 10px;
+    gap: 7px;
+  }
+  .connectedIntro {
+    grid-template-columns: 72px 1fr;
+    align-items: start;
+    gap: 16px;
+  }
+  .connectedIntro .heading {
+    font-size: clamp(24px, 6.2vw, 32px);
+  }
+  .successOrbit {
+    width: 72px;
+  }
+  .successOrbit i {
+    width: 8px;
+    height: 8px;
+  }
+  .connectedCard {
+    padding: 22px;
+    border-radius: 18px;
+  }
+  .cardRow strong,
+  .walletCard strong {
+    font-size: 15px;
+  }
+  .addressRow {
+    margin-top: 25px;
+    gap: 10px;
+  }
+  .addressRow code {
+    font-size: 13px;
+  }
+  .copy {
+    font-size: 11px;
+    gap: 6px;
+  }
+  .copy > span {
+    width: 30px;
+    height: 36px;
+  }
+  .copy svg {
+    width: 18px;
+    height: 18px;
+  }
+  .cardCaption {
+    font-size: 10px;
+  }
+  .disconnect { font-size: 11px; }
+  .assurance {
+    padding: 16px;
+    gap: 10px;
+    margin: 18px 0;
+  }
+  .assurance p {
+    font-size: 11px;
+  }
+  .walletCard {
+    padding: 14px;
+    border-radius: 14px;
+    gap: 12px;
+  }
+  .walletCard p {
+    font-size: 11px;
+  }
+  .installCard {
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 12px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+  .primary {
+    min-height: 48px;
+  }
+  .footnote {
+    font-size: 10px;
+  }
+}
